@@ -138,3 +138,27 @@ footer.site a { color: var(--cyan); }
 .issue li { margin: 0 0 14px; }
 .issue hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
 .issue .back { margin-top: 48px; font-weight: 600; }
+
+/* OECD heatmap */
+.chart.wide { grid-column: 1 / -1; }
+.hm-controls { display: inline-flex; border: 1px solid var(--line); margin: 0 0 16px; }
+.hm-controls button { font: 500 14px "Inter", sans-serif; padding: 7px 14px; border: 0; background: #fff; color: var(--gray); cursor: pointer; }
+.hm-controls button + button { border-left: 1px solid var(--line); }
+.hm-controls button.on { background: var(--gray); color: #fff; }
+.hm-scroll { overflow-x: auto; }
+.hm { border-collapse: separate; border-spacing: 2px; font-size: 13px; width: 100%; font-variant-numeric: tabular-nums; }
+.hm th { font-weight: 500; text-align: right; padding: 4px 8px; color: var(--slate); white-space: nowrap; }
+.hm thead th { text-align: center; font-size: 12px; }
+.hm thead th:first-child { text-align: left; }
+.hm tbody th[scope=row] { color: var(--gray); text-align: left; }
+.hm tr.grp th { text-align: left; font-family: "Saira", sans-serif; font-weight: 600; color: var(--gray); padding-top: 14px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.hm td { text-align: center; min-width: 40px; height: 28px; border-radius: 3px; cursor: default; }
+.hm td.na { color: #b5bcbc; background: #fff; }
+.hm td:focus { outline: 2px solid var(--gray); outline-offset: 1px; }
+.hm-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; font-size: 13px; color: var(--slate); }
+.hm-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.hm-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+.hm-legend i.na-key { background: #fff; border: 1px solid var(--line); font-style: normal; font-size: 10px; text-align: center; line-height: 12px; color: #b5bcbc; }
+.hm-tip { position: absolute; pointer-events: none; background: var(--gray); color: #fff; font-size: 13px; padding: 6px 10px; border-radius: 3px; opacity: 0; transition: opacity .1s; z-index: 20; }
+.chart .notes { font-size: 13px; color: var(--slate); margin: 12px 0 0; line-height: 1.55; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
