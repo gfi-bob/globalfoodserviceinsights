@@ -126,3 +126,15 @@ footer.site a { color: var(--cyan); }
   body { font-size: 16px; }
   .thisweek .body { font-size: 17px; }
 }
+
+/* Newsletter issue pages */
+.issue-head { padding: 48px 0 44px; }
+.issue-head h1 { margin: 0; }
+.issue > * { max-width: 800px; }
+.issue > p:first-child em { color: var(--slate); }
+.issue h2 { font-size: 26px; margin: 44px 0 12px; }
+.issue h2::after { content: ""; display: block; width: 44px; height: 3px; background: var(--cyan); margin-top: 8px; }
+.issue ul { padding-left: 20px; }
+.issue li { margin: 0 0 14px; }
+.issue hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+.issue .back { margin-top: 48px; font-weight: 600; }
