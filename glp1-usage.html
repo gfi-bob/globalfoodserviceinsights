@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLP-1 Usage Tracker — Global Foodservice Insights</title>
+<meta name="description" content="What share of U.S. adults are taking GLP-1 weight-loss drugs? Every published national reading since 2023, plotted by quarter.">
+<meta property="og:title" content="GLP-1 Usage Tracker — Global Foodservice Insights">
+<meta property="og:description" content="What share of U.S. adults are taking GLP-1 weight-loss drugs? Every published national reading since 2023, plotted by quarter.">
+<meta property="og:site_name" content="Global Foodservice Insights">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" type="application/rss+xml" title="Global Foodservice Insights" href="feed.xml">
+<link rel="icon" type="image/png" href="assets/mark.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#333333">
+</head>
+<body>
+<header class="masthead"><div class="wrap">
+<a class="brand" href="index.html" aria-label="Global Foodservice Insights home"><picture><source srcset="assets/logo-dark.png" media="(prefers-color-scheme: dark)"><img src="assets/logo.png" alt="Global Foodservice Insights" width="121" height="62"></picture></a>
+<nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="digest/index.html">Food & Drink Weekly</a><a href="chain-marketing/index.html">Chain Marketing Weekly</a><a href="glp1/index.html">GLP-1 Weekly</a><a href="spending.html">Spending Tracker</a><a href="sentiment.html">Consumer Sentiment</a><a href="glp1-usage.html" aria-current="page">GLP-1 Usage</a><a href="about.html">About</a></nav>
+</div></header>
+<main>
+<div class="wrap">
+<header class="page-head">
+<p class="eyebrow">Data · United States</p>
+<h1>How many Americans are taking GLP-1 drugs?</h1>
+<p>Every published national survey reading of the share of U.S. adults currently taking a GLP-1 medication (Ozempic, Wegovy, Mounjaro, Zepbound, Foundayo and the like), plotted in the quarter the survey was fielded. No one publishes a consistent quarterly series of adult usage, so this chart lines up the polls that exist. A second view tracks households with a current user, from the consumer-panel firms that do survey quarterly.</p>
+</header>
+
+<section class="editors-note" aria-labelledby="note-title">
+<p class="eyebrow">Bob's Take</p>
+<h2 id="note-title">Everybody's On It. Well, Not Everybody.</h2>
+<p class="byline">By Bob O'Brien</p>
+<p class="body">An American might think that everyone who can is taking a weight loss drug. Look around the office, the gym, the table next to you at dinner (go ahead, check what's left on their plate), and it can certainly feel that way. The surveys say otherwise, though not by as much as you might guess. About one American adult in nine is currently taking a GLP-1 to lose weight, and if you count the people taking them for diabetes or heart disease, it's closer to one in eight. That's a lot of people. It's also a long way from everybody.</p>
+<p class="body">And the U.S. is the outlier. Australia comes closest at roughly one adult in ten. Canada lands somewhere between one in twenty and one in twelve, depending on whose poll you believe. Britain has nearly doubled in under a year…to about 6 percent. Much of continental Europe sits around 2 percent, held back in places like Germany, where health insurers treat the drugs as a lifestyle choice. And in China and India, home to more than a third of the people on the planet, use rounds to…wait for it…zero. So the next time someone tells you GLP-1s are rewriting how the world eats, ask them which world they mean.</p>
+</section>
+
+<section class="viz-root" id="tracker">
+<div class="viz-controls">
+  <div class="seg" role="group" aria-label="Measure">
+    <span class="seg-label">Measure</span>
+    <button type="button" data-view="adults">Adults currently taking</button>
+    <button type="button" data-view="households">Households with a current user</button>
+  </div>
+</div>
+
+<div class="viz-card">
+  <div class="viz-head">
+    <h2 id="viz-title">Share of U.S. adults currently taking a GLP-1</h2>
+    <div class="viz-key" id="legend" aria-hidden="true"></div>
+  </div>
+  <div id="chart" class="chart" tabindex="0" role="img" aria-describedby="chart-help"></div>
+  <p id="chart-help" class="chart-help">Each dot is one published survey, placed in the quarter it was fielded; lines join readings from the same source. Hover or tap for details, or focus the chart and use the arrow keys.</p>
+  <div id="tip" class="viz-tip" role="status" hidden></div>
+</div>
+<p class="viz-note" id="viz-note"></p>
+</section>
+
+<section class="data-section">
+<div class="section-head"><h2>Every reading</h2><button type="button" class="dl" id="dl">Download (CSV)</button></div>
+<p class="small-note">Surveys ask slightly different questions (weight loss only versus any reason), so readings from different sources are not strictly comparable. Compare a source with itself over time.</p>
+<div class="table-scroll"><table class="data-table" id="table"></table></div>
+</section>
+
+<section class="data-section">
+<div class="section-head"><h2>Source and method</h2></div>
+<div class="method">
+<p><strong>Why there isn't a clean quarterly line.</strong> No government agency counts GLP-1 users, and the public polls that ask about current use run once or twice a year at most. Before 2024, no national poll asked whether adults were <em>currently</em> taking these drugs at all. Numerator surveys a fixed panel every quarter, but publishes household figures only occasionally; the full series is available to its clients.</p>
+<p><strong>Gallup</strong> (National Health and Well-Being Index, Gallup Panel): adults currently taking a GLP-1 <em>for weight loss</em>. The 2026 wave was fielded May 28–June 5, 2026 (n = 5,065). Gallup has not published field dates for its 2024 and 2025 waves; they are plotted in Q2 of each year and marked approximate. These are Gallup's revised figures after its September 2026 reweighting; an earlier Gallup release reported 5.8% for February 2024 and 12.4% for 2025 on a different basis.</p>
+<p><strong>KFF Health Tracking Poll</strong>: adults currently taking a GLP-1 for weight loss <em>or</em> a chronic condition such as diabetes or heart disease. Fielded April 23–May 1, 2024 (n = 1,479) and October 27–November 2, 2025 (n = 1,350).</p>
+<p><strong>NORC AmeriSpeak Omnibus</strong>: adults currently taking a GLP-1 for any reason, February 19–23, 2026 (n = 1,073).</p>
+<p><strong>Léger</strong> (LEO online panel, opt-in): U.S. adults currently taking a prescription GLP-1, February 6–9, 2026 (n = 1,012). An opt-in panel, so treat it as directional.</p>
+<p><strong>Households</strong>: Numerator's quarterly GLP-1 tracker reported 22% of U.S. households with a current user in its mid-2026 survey, double October 2023 (the 11% shown for Q4 2023 is derived from that "double"). Circana's receipt-panel surveys found 23% of households with a GLP-1 user in September 2025 and 30% with a current user in September 2026.</p>
+<p class="small-note">Compiled 14 November 2026. New readings are added as they are published.</p>
+</div>
+</section>
+</div>
+
+<style>
+.viz-root, .data-section { --s1: #1f8f99; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --grid: #e6eaed; --ref: #8e989e; --cross: #b9c1c6; }
+@media (prefers-color-scheme: dark) { .viz-root, .data-section { --s1: #3fb3bc; --s2: #d95926; --s3: #199e70; --s4: #c98500; --grid: #2a3237; --ref: #6b757b; --cross: #4a545a; } }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 28px 0 14px; }
+.seg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.seg-label { font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+.seg button, .dl { font: 600 14px/1 var(--sans); color: var(--ink-2); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 13px; cursor: pointer; }
+.seg button:hover, .dl:hover { border-color: var(--ink-3); color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.viz-card { position: relative; background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 24px 14px; }
+.viz-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 10px; }
+.viz-head h2 { font: 700 22px/1.2 var(--serif); margin: 0; }
+.viz-key { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+.viz-key span { display: inline-flex; align-items: center; gap: 7px; }
+.viz-key i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.chart { position: relative; width: 100%; outline: none; touch-action: pan-y; }
+.chart:focus-visible { box-shadow: 0 0 0 2px var(--paprika); border-radius: 4px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--sans); fill: var(--ink-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+.chart .endlab { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.chart .vlab { font-size: 12px; font-weight: 600; fill: var(--ink-2); }
+.chart-help { font-size: 12.5px; color: var(--ink-3); margin: 6px 0 0; }
+.viz-note { color: var(--ink-2); font-size: 15px; max-width: 72ch; margin: 14px 0 0; }
+.viz-tip { position: absolute; z-index: 5; min-width: 200px; max-width: 300px; background: var(--ink); color: var(--paper); font-size: 13px; line-height: 1.45; padding: 9px 12px; border-radius: 6px; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+.viz-tip .t-h { font-size: 12px; opacity: .8; margin-bottom: 4px; }
+.viz-tip .t-r { display: flex; align-items: baseline; gap: 8px; margin-top: 3px; }
+.viz-tip .t-r i { width: 9px; height: 9px; border-radius: 50%; flex: none; transform: translateY(1px); }
+.viz-tip .t-r b { font-variant-numeric: tabular-nums; min-width: 30px; }
+.viz-tip .t-s { opacity: .75; font-size: 12px; }
+.data-section { margin: 8px 0 40px; }
+.dl { font-size: 13px; padding: 7px 12px; }
+.small-note { color: var(--ink-3); font-size: 14px; margin: 0 0 12px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--card); }
+.data-table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.data-table th, .data-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.data-table td.num { text-align: right; white-space: nowrap; font-weight: 600; }
+.data-table thead th { font: 700 11.5px/1.3 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.data-table tr.region td { font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); background: var(--paper); padding-top: 14px; }
+.data-table .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; }
+.method p { max-width: 72ch; color: var(--ink-2); }
+@media (max-width: 640px) { .viz-card { padding: 16px 12px 12px; } .viz-head h2 { font-size: 19px; } }
+</style>
+
+<script>
+(function () {
+  var Q = [];
+  for (var y = 2023; y <= 2026; y++) for (var q = 1; q <= 4; q++) Q.push(y + "-Q" + q);
+  var D = {
+    adults: {
+      title: "Share of U.S. adults currently taking a GLP-1",
+      note: "Every source shows use climbing. Gallup, which asks only about weight loss, has current use going from 3% in 2024 to 11% in mid-2026; KFF, which counts any reason, doubled from 6% to 12% between spring 2024 and late 2025. Polls in early 2026 put it between 9% and 11%.",
+      series: [
+        { id: "gallup", name: "Gallup", desc: "taking for weight loss", slot: 1, pts: [
+          { q: "2024-Q2", v: 3, approx: true, when: "2024 wave (field dates not published)", n: "" },
+          { q: "2025-Q2", v: 8, approx: true, when: "2025 wave (field dates not published)", n: "" },
+          { q: "2026-Q2", v: 11, when: "May 28–Jun 5, 2026", n: "5,065" } ] },
+        { id: "kff", name: "KFF", desc: "taking for any reason", slot: 2, pts: [
+          { q: "2024-Q2", v: 6, when: "Apr 23–May 1, 2024", n: "1,479" },
+          { q: "2025-Q4", v: 12, when: "Oct 27–Nov 2, 2025", n: "1,350" } ] },
+        { id: "norc", name: "NORC", desc: "taking for any reason", slot: 3, pts: [
+          { q: "2026-Q1", v: 9, when: "Feb 19–23, 2026", n: "1,073" } ] },
+        { id: "leger", name: "Léger", desc: "prescription GLP-1, opt-in panel", slot: 4, pts: [
+          { q: "2026-Q1", v: 11, when: "Feb 6–9, 2026", n: "1,012" } ] }
+      ] },
+    households: {
+      title: "Share of U.S. households with a current GLP-1 user",
+      note: "Households run about twice the adult rate, since one user puts the whole household in the count. Numerator has the share doubling from about 11% in October 2023 to 22% by mid-2026; Circana's receipt panel went from 23% in September 2025 to 30% a year later.",
+      series: [
+        { id: "numerator", name: "Numerator", desc: "quarterly panel tracker", slot: 1, pts: [
+          { q: "2023-Q4", v: 11, approx: true, when: "Oct 2023 (derived: half of the 2026 reading)", n: "" },
+          { q: "2026-Q3", v: 22, when: "Mid-2026 survey, reported Aug 5, 2026", n: "95,000+ responses" } ] },
+        { id: "circana", name: "Circana", desc: "receipt-panel survey", slot: 2, pts: [
+          { q: "2025-Q3", v: 23, when: "Sep 2025 (a GLP-1 user in the household)", n: "" },
+          { q: "2026-Q3", v: 30, when: "Sep 2026 (a current user)", n: "" } ] }
+      ] }
+  };
+  var state = { view: "adults" };
+  var QL = function (q) { return "Q" + q.slice(-1) + " " + q.slice(0, 4); };
+  var chart = document.getElementById("chart"), tip = document.getElementById("tip");
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { var e = document.createElementNS(NS, tag); for (var k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+  function color(s) { return "var(--s" + s + ")"; }
+  var geo = null, active = -1;
+
+  function draw() {
+    chart.innerHTML = ""; tip.hidden = true; active = -1;
+    var V = D[state.view], W = Math.max(300, chart.clientWidth), narrow = W < 560;
+    var H = narrow ? 300 : 380, m = { t: 16, r: narrow ? 70 : 150, b: 30, l: 40 };
+    var hi = state.view === "adults" ? 15 : 35, step = 5;
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, n = Q.length;
+    var X = function (i) { return m.l + i * pw / (n - 1); };
+    var Y = function (v) { return m.t + (hi - v) / hi * ph; };
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H });
+    for (var t = 0; t <= hi; t += step) {
+      el("line", { x1: m.l, x2: m.l + pw, y1: Y(t), y2: Y(t), stroke: t === 0 ? "var(--ref)" : "var(--grid)", "stroke-width": 1 }, svg);
+      var tx = el("text", { x: m.l - 8, y: Y(t) + 4, "text-anchor": "end" }, svg); tx.textContent = t + "%";
+    }
+    Q.forEach(function (q, i) {
+      el("line", { x1: X(i), x2: X(i), y1: m.t + ph, y2: m.t + ph + 4, stroke: "var(--ref)" }, svg);
+      if (q.slice(-1) === "1") { var tt = el("text", { x: X(i), y: H - 8, "text-anchor": "start" }, svg); tt.textContent = q.slice(0, 4); }
+    });
+    var cross = el("line", { y1: m.t, y2: m.t + ph, stroke: "var(--cross)", "stroke-width": 1, visibility: "hidden" }, svg);
+    var ends = [];
+    V.series.forEach(function (s) {
+      var pts = s.pts.map(function (p) { return { x: X(Q.indexOf(p.q)), y: Y(p.v), p: p }; });
+      if (pts.length > 1) el("path", { d: pts.map(function (o, i) { return (i ? "L" : "M") + o.x.toFixed(1) + "," + o.y.toFixed(1); }).join(""), fill: "none", stroke: color(s.slot), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+      pts.forEach(function (o) {
+        el("circle", { cx: o.x, cy: o.y, r: 5, fill: o.p.approx ? "var(--card)" : color(s.slot), stroke: o.p.approx ? color(s.slot) : "var(--card)", "stroke-width": 2 }, svg);
+      });
+      var last = pts[pts.length - 1];
+      ends.push({ s: s, x: last.x, y: last.y, v: last.p.v });
+    });
+    ends.sort(function (a, b) { return a.y - b.y; });
+    var gap = 16;
+    ends.forEach(function (e, i) { e.ly = e.y; if (i && e.ly - ends[i - 1].ly < gap) e.ly = ends[i - 1].ly + gap; });
+    ends.forEach(function (e) {
+      var lx = m.l + pw + 10;
+      var t = el("text", { x: lx, y: e.ly + 4, class: "endlab" }, svg);
+      t.textContent = narrow ? e.s.name : e.s.name + " " + e.v + "%";
+      if (Math.abs(e.x - lx) > 12) el("line", { x1: e.x + 7, x2: lx - 4, y1: e.y, y2: e.ly, stroke: "var(--grid)", "stroke-width": 1 }, svg);
+    });
+    chart.appendChild(svg);
+    geo = { X: X, n: n, m: m, pw: pw, W: W, cross: cross, V: V };
+    chart.setAttribute("aria-label", V.title + ", by quarter, 2023 to 2026. Latest readings: " + ends.map(function (e) { return e.s.name + " " + e.v + "%"; }).join("; ") + ".");
+  }
+  function readingsAt(i) {
+    var r = [];
+    geo.V.series.forEach(function (s) { s.pts.forEach(function (p) { if (p.q === Q[i]) r.push({ s: s, p: p }); }); });
+    return r;
+  }
+  function show(i) {
+    if (!geo) return; i = Math.max(0, Math.min(geo.n - 1, i)); active = i;
+    var x = geo.X(i); geo.cross.setAttribute("x1", x); geo.cross.setAttribute("x2", x); geo.cross.setAttribute("visibility", "visible");
+    var rows = readingsAt(i); tip.innerHTML = "";
+    var h = document.createElement("div"); h.className = "t-h"; h.textContent = QL(Q[i]); tip.appendChild(h);
+    if (!rows.length) { var e = document.createElement("div"); e.textContent = "No survey published this quarter"; tip.appendChild(e); }
+    rows.forEach(function (r) {
+      var row = document.createElement("div"); row.className = "t-r";
+      var k = document.createElement("i"); k.style.background = color(r.s.slot);
+      var b = document.createElement("b"); b.textContent = r.p.v + "%";
+      var sp = document.createElement("span"); sp.innerHTML = "";
+      sp.appendChild(document.createTextNode(r.s.name + " — " + r.s.desc));
+      var sub = document.createElement("div"); sub.className = "t-s"; sub.textContent = r.p.when + (r.p.n ? " · n = " + r.p.n : "") + (r.p.approx ? " · approximate placement" : "");
+      sp.appendChild(sub);
+      row.appendChild(k); row.appendChild(b); row.appendChild(sp); tip.appendChild(row);
+    });
+    tip.hidden = false;
+    var cr = tip.parentNode.getBoundingClientRect(), chr = chart.getBoundingClientRect();
+    var px = chr.left - cr.left + x * chr.width / geo.W, left = px + 14;
+    if (left + tip.offsetWidth > cr.width - 6) left = px - 14 - tip.offsetWidth;
+    tip.style.left = Math.max(6, left) + "px"; tip.style.top = (chr.top - cr.top + 10) + "px";
+  }
+  function hide() { if (!geo) return; tip.hidden = true; geo.cross.setAttribute("visibility", "hidden"); active = -1; }
+  function idx(ev) { var r = chart.getBoundingClientRect(), x = (ev.clientX - r.left) * geo.W / r.width; return Math.round((x - geo.m.l) / geo.pw * (geo.n - 1)); }
+  chart.addEventListener("pointermove", function (ev) { if (geo) show(idx(ev)); });
+  chart.addEventListener("pointerdown", function (ev) { if (geo) show(idx(ev)); });
+  chart.addEventListener("pointerleave", function (ev) { if (ev.pointerType === "mouse") hide(); });
+  chart.addEventListener("keydown", function (ev) {
+    if (!geo) return;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") { ev.preventDefault(); show(active < 0 ? geo.n - 1 : active + (ev.key === "ArrowRight" ? 1 : -1)); }
+    else if (ev.key === "Escape") hide();
+  });
+  chart.addEventListener("focus", function () { if (geo && active < 0) show(geo.n - 1); });
+  chart.addEventListener("blur", hide);
+
+  function update() {
+    var V = D[state.view];
+    document.querySelectorAll(".seg button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.view === state.view)); });
+    document.getElementById("viz-title").textContent = V.title;
+    document.getElementById("viz-note").textContent = V.note;
+    var lg = document.getElementById("legend"); lg.innerHTML = "";
+    V.series.forEach(function (s) { var sp = document.createElement("span"), k = document.createElement("i"); k.style.background = color(s.slot); sp.appendChild(k); sp.appendChild(document.createTextNode(s.name + " (" + s.desc + ")")); lg.appendChild(sp); });
+    try { history.replaceState(null, "", "#" + state.view); } catch (e) {}
+    draw();
+  }
+  document.querySelectorAll(".seg button").forEach(function (b) { b.addEventListener("click", function () { state.view = b.dataset.view; update(); }); });
+  if (location.hash === "#households") state.view = "households";
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(draw, 120); });
+  update();
+
+  // table
+  var h = "<thead><tr><th>Source</th><th>Measures</th><th>Quarter</th><th>Fielded</th><th>Sample</th><th style='text-align:right'>Share</th></tr></thead><tbody>";
+  [["adults", "Adults currently taking"], ["households", "Households with a current user"]].forEach(function (g) {
+    h += "<tr class='region'><td colspan='6'>" + g[1] + "</td></tr>";
+    D[g[0]].series.forEach(function (s) { s.pts.forEach(function (p) {
+      h += "<tr><td><span class='sw' style='background:" + color(s.slot) + "'></span>" + s.name + "</td><td>" + s.desc + "</td><td>" + QL(p.q) + (p.approx ? " (approx.)" : "") + "</td><td>" + p.when + "</td><td>" + (p.n || "–") + "</td><td class='num'>" + p.v + "%</td></tr>";
+    }); });
+  });
+  var tbl = document.getElementById("table"); tbl.innerHTML = h + "</tbody>";
+
+  document.getElementById("dl").addEventListener("click", function () {
+    var rows = [["measure", "source", "description", "quarter", "approximate", "fielded", "sample", "percent"]];
+    ["adults", "households"].forEach(function (g) { D[g].series.forEach(function (s) { s.pts.forEach(function (p) {
+      rows.push([g, s.name, s.desc, p.q, p.approx ? "yes" : "no", p.when, p.n, p.v].map(function (c) { c = String(c); return /[",]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }));
+    }); }); });
+    var blob = new Blob([rows.map(function (r) { return r.join(","); }).join("\n")], { type: "text/csv" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "glp1-usage-us.csv"; document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
+
+</main>
+<footer class="footer"><div class="wrap">
+<span>© 2026 Global Foodservice Insights</span>
+<span><a href="feed.xml">RSS feed</a> · <a href="about.html">About these newsletters</a></span>
+</div></footer>
+</body>
+</html>

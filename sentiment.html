@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consumer Sentiment Tracker — Global Foodservice Insights</title>
+<meta name="description" content="Normalized consumer confidence (long-run average = 100) for 18 countries: annual 2021-2025 and the latest five quarters.">
+<meta property="og:title" content="Consumer Sentiment Tracker — Global Foodservice Insights">
+<meta property="og:description" content="Normalized consumer confidence (long-run average = 100) for 18 countries: annual 2021-2025 and the latest five quarters.">
+<meta property="og:site_name" content="Global Foodservice Insights">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" type="application/rss+xml" title="Global Foodservice Insights" href="feed.xml">
+<link rel="icon" type="image/png" href="assets/mark.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#333333">
+</head>
+<body>
+<header class="masthead"><div class="wrap">
+<a class="brand" href="index.html" aria-label="Global Foodservice Insights home"><picture><source srcset="assets/logo-dark.png" media="(prefers-color-scheme: dark)"><img src="assets/logo.png" alt="Global Foodservice Insights" width="121" height="62"></picture></a>
+<nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="digest/index.html">Food & Drink Weekly</a><a href="chain-marketing/index.html">Chain Marketing Weekly</a><a href="glp1/index.html">GLP-1 Weekly</a><a href="spending.html">Spending Tracker</a><a href="sentiment.html" aria-current="page">Consumer Sentiment</a><a href="glp1-usage.html">GLP-1 Usage</a><a href="about.html">About</a></nav>
+</div></header>
+<main>
+<div class="wrap">
+<header class="page-head">
+<p class="eyebrow">Data · 18 markets</p>
+<h1>Consumer sentiment: how confident are households?</h1>
+<p>The OECD Consumer Confidence Indicator, built from each country's household survey and normalized so that every country's long-run average equals 100. Above 100 means consumers are more upbeat than usual for that country; below 100, more cautious. Because each country is measured against its own history, the trends can be compared across countries.</p>
+</header>
+
+<section class="viz-root" id="tracker">
+<div class="viz-controls">
+  <div class="seg" role="group" aria-label="Time scale">
+    <span class="seg-label">View</span>
+    <button type="button" data-mode="annual">Years</button>
+    <button type="button" data-mode="quarterly">Quarters</button>
+  </div>
+</div>
+<div class="picker" role="group" aria-labelledby="pick-label">
+  <div class="picker-head">
+    <span class="seg-label" id="pick-label">Countries</span>
+    <span class="pick-count" id="pick-count" aria-live="polite"></span>
+    <button type="button" class="pick-clear" id="pick-clear">Clear</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <p class="viz-missing">Not in the OECD indicator: Nigeria, Singapore, Taiwan.</p>
+</div>
+
+<div class="viz-card">
+  <div class="viz-head">
+    <h2 id="viz-title">Consumer confidence, quarterly</h2>
+    <div class="viz-key" id="legend" aria-hidden="true"></div>
+  </div>
+  <div id="chart" class="chart" tabindex="0" role="img" aria-describedby="chart-help"></div>
+  <p id="chart-help" class="chart-help">Hover or tap the chart for values. With the chart focused, use the left and right arrow keys to step through periods.</p>
+  <div id="tip" class="viz-tip" role="status" hidden></div>
+</div>
+</section>
+
+<section class="data-section">
+<div class="section-head"><h2>All figures</h2><button type="button" class="dl" id="dl">Download full series (CSV)</button></div>
+<p class="small-note">Index, long-run average = 100. Annual and quarterly figures are averages of the monthly readings. The table shows the last five quarters; the CSV has every quarter since 2020.</p>
+<div class="table-scroll"><table class="data-table" id="table"></table></div>
+</section>
+
+<section class="data-section">
+<div class="section-head"><h2>Source and method</h2></div>
+<div class="method">
+<p><strong>Source:</strong> OECD, Composite Leading Indicators database, <em>Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100</em>, monthly. The OECD builds each country's indicator from its national consumer survey (for example, the University of Michigan survey for the United States and the European Commission survey for EU members), smooths it, and rescales it so the long-run average is 100 and swings are comparable in size across countries.</p>
+<p><strong>Annual and quarterly values</strong> are simple averages of the monthly readings. The latest month published is shown for each country in the table.</p>
+<p><strong>Not covered:</strong> Nigeria, Singapore and Taiwan are not in the OECD indicator. Their national surveys (Central Bank of Nigeria Consumer Expectations Survey; National Central University's Taiwan consumer confidence index) use different scales, so they are left out rather than mixed in un-normalized.</p>
+<p class="small-note">Data retrieved from the OECD Data Explorer on 13 November 2026.</p>
+</div>
+</section>
+</div>
+
+<style>
+.viz-root { --s1: #1f8f99; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --grid: #e6eaed; --ref: #8e989e; --cross: #b9c1c6; }
+@media (prefers-color-scheme: dark) { .viz-root { --s1: #3fb3bc; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --grid: #2a3237; --ref: #6b757b; --cross: #4a545a; } }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 28px 0 14px; }
+.seg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.seg-label { font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+.seg button, .chip, .pick-clear, .dl { font: 600 14px/1 var(--sans); color: var(--ink-2); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 13px; cursor: pointer; }
+.seg button:hover, .chip:hover:not(:disabled), .pick-clear:hover, .dl:hover { border-color: var(--ink-3); color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.picker { margin: 0 0 18px; }
+.picker-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.pick-count { font-size: 13px; color: var(--ink-3); }
+.pick-clear { font-size: 12.5px; padding: 5px 10px; margin-left: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-weight: 500; font-size: 13.5px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 7px; }
+.chip .key { width: 14px; height: 3px; border-radius: 2px; background: transparent; display: none; }
+.chip[aria-pressed="true"] { border-color: var(--ink-2); color: var(--ink); font-weight: 650; box-shadow: inset 0 0 0 1px var(--ink-2); }
+.chip[aria-pressed="true"] .key { display: inline-block; }
+.chip:disabled { opacity: .45; cursor: not-allowed; }
+.viz-missing { color: var(--ink-3); font-size: 13px; margin: 10px 0 0; }
+.viz-card { position: relative; background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 24px 14px; }
+.viz-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 10px; }
+.viz-head h2 { font: 700 22px/1.2 var(--serif); margin: 0; }
+.viz-key { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+.viz-key span { display: inline-flex; align-items: center; gap: 7px; }
+.viz-key i { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
+.viz-key i.ref { height: 0; border-top: 1.5px dashed var(--ref); border-radius: 0; }
+.chart { position: relative; width: 100%; outline: none; touch-action: pan-y; }
+.chart:focus-visible { box-shadow: 0 0 0 2px var(--paprika); border-radius: 4px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--sans); fill: var(--ink-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+.chart .endlab { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.chart .reflab { font-size: 11px; fill: var(--ink-3); }
+.chart-help { font-size: 12.5px; color: var(--ink-3); margin: 6px 0 0; }
+.empty { padding: 60px 0; text-align: center; color: var(--ink-3); }
+.viz-tip { position: absolute; z-index: 5; min-width: 170px; background: var(--ink); color: var(--paper); font-size: 13px; line-height: 1.5; padding: 9px 12px; border-radius: 6px; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+.viz-tip .t-h { font-size: 12px; opacity: .8; margin-bottom: 3px; }
+.viz-tip .t-r { display: flex; align-items: center; gap: 8px; }
+.viz-tip .t-r i { width: 12px; height: 3px; border-radius: 2px; flex: none; }
+.viz-tip .t-r b { font-variant-numeric: tabular-nums; min-width: 38px; }
+.data-section { margin: 8px 0 40px; }
+.dl { font-size: 13px; padding: 7px 12px; }
+.small-note { color: var(--ink-3); font-size: 14px; margin: 0 0 12px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--card); }
+.data-table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.data-table th, .data-table td { padding: 7px 7px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+.data-table th:first-child, .data-table td:first-child { text-align: left; position: sticky; left: 0; background: var(--card); }
+.data-table thead th { font: 700 11.5px/1.3 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.data-table thead tr.grp th { border-bottom: none; color: var(--ink-3); text-align: center; }
+.data-table td.sep, .data-table th.sep { border-left: 2px solid var(--rule); }
+.data-table td.na { color: var(--ink-3); }
+.data-table tr.region td { font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); background: var(--paper); text-align: left; padding-top: 14px; }
+.data-table .ptag { font-size: 11px; color: var(--ink-3); }
+.method p { max-width: 72ch; color: var(--ink-2); }
+@media (max-width: 640px) { .viz-card { padding: 16px 12px 12px; } .viz-head h2 { font-size: 19px; } }
+</style>
+
+<script>
+(function () {
+  var D = {"years":["2020","2021","2022","2023","2024","2025"],"quarters":["2020-Q1","2020-Q2","2020-Q3","2020-Q4","2021-Q1","2021-Q2","2021-Q3","2021-Q4","2022-Q1","2022-Q2","2022-Q3","2022-Q4","2023-Q1","2023-Q2","2023-Q3","2023-Q4","2024-Q1","2024-Q2","2024-Q3","2024-Q4","2025-Q1","2025-Q2","2025-Q3","2025-Q4","2026-Q1","2026-Q2","2026-Q3"],"countries":[{"iso":"USA","name":"United States","region":"Americas","annual":{"2020":99.6,"2021":99.2,"2022":97.2,"2023":97.9,"2024":98.6,"2025":97.1},"quarterly":{"2020-Q1":101.0,"2020-Q2":99.0,"2020-Q3":99.1,"2020-Q4":99.4,"2021-Q1":99.6,"2021-Q2":100.0,"2021-Q3":99.0,"2021-Q4":98.3,"2022-Q1":97.8,"2022-Q2":97.0,"2022-Q3":96.8,"2022-Q4":97.3,"2023-Q1":97.7,"2023-Q2":97.7,"2023-Q3":98.1,"2023-Q4":98.1,"2024-Q1":99.1,"2024-Q2":98.6,"2024-Q3":98.2,"2024-Q4":98.6,"2025-Q1":97.7,"2025-Q2":96.9,"2025-Q3":97.1,"2025-Q4":96.6,"2026-Q1":96.7,"2026-Q2":96.2,"2026-Q3":96.3},"latest":{"month":"2026-10","value":96.0},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"CAN","name":"Canada","region":"Americas","annual":{"2020":98.6,"2021":100.6,"2022":98.5,"2023":97.3,"2024":97.2,"2025":96.4},"quarterly":{"2020-Q1":100.1,"2020-Q2":97.5,"2020-Q3":98.3,"2020-Q4":98.4,"2021-Q1":99.6,"2021-Q2":100.8,"2021-Q3":101.3,"2021-Q4":100.6,"2022-Q1":99.8,"2022-Q2":99.0,"2022-Q3":97.9,"2022-Q4":97.4,"2023-Q1":97.8,"2023-Q2":97.9,"2023-Q3":97.0,"2023-Q4":96.5,"2024-Q1":97.0,"2024-Q2":97.0,"2024-Q3":97.4,"2024-Q4":97.3,"2025-Q1":96.2,"2025-Q2":96.1,"2025-Q3":96.7,"2025-Q4":96.6,"2026-Q1":96.7,"2026-Q2":96.6,"2026-Q3":97.0},"latest":{"month":"2026-10","value":96.7},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"MEX","name":"Mexico","region":"Americas","annual":{"2020":97.6,"2021":101.4,"2022":101.3,"2023":103.3,"2024":104.5,"2025":103.5},"quarterly":{"2020-Q1":100.9,"2020-Q2":95.1,"2020-Q3":96.3,"2020-Q4":98.1,"2021-Q1":99.4,"2021-Q2":101.5,"2021-Q3":102.1,"2021-Q4":102.6,"2022-Q1":102.0,"2022-Q2":101.8,"2022-Q3":100.4,"2022-Q4":101.0,"2023-Q1":102.5,"2023-Q2":103.0,"2023-Q3":103.8,"2023-Q4":104.0,"2024-Q1":104.4,"2024-Q2":104.5,"2024-Q3":104.4,"2024-Q4":104.6,"2025-Q1":103.9,"2025-Q2":103.7,"2025-Q3":103.6,"2025-Q4":102.8,"2026-Q1":102.4,"2026-Q2":102.4,"2026-Q3":103.1},"latest":{"month":"2026-09","value":103.3},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"BRA","name":"Brazil","region":"Americas","annual":{"2020":98.5,"2021":98.3,"2022":99.0,"2023":100.6,"2024":100.8,"2025":100.0},"quarterly":{"2020-Q1":99.6,"2020-Q2":97.0,"2020-Q3":98.6,"2020-Q4":98.8,"2021-Q1":98.1,"2021-Q2":98.5,"2021-Q3":98.6,"2021-Q4":97.9,"2022-Q1":98.3,"2022-Q2":98.6,"2022-Q3":99.2,"2022-Q4":99.8,"2023-Q1":100.0,"2023-Q2":100.6,"2023-Q3":101.1,"2023-Q4":100.8,"2024-Q1":100.7,"2024-Q2":100.9,"2024-Q3":100.9,"2024-Q4":100.8,"2025-Q1":99.9,"2025-Q2":99.9,"2025-Q3":99.9,"2025-Q4":100.1,"2026-Q1":100.1,"2026-Q2":100.3,"2026-Q3":99.8},"latest":{"month":"2026-10","value":99.5},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"GBR","name":"United Kingdom","region":"Europe","annual":{"2020":98.4,"2021":101.1,"2022":94.3,"2023":96.9,"2024":99.4,"2025":99.3},"quarterly":{"2020-Q1":100.3,"2020-Q2":97.5,"2020-Q3":97.9,"2020-Q4":97.6,"2021-Q1":99.6,"2021-Q2":102.4,"2021-Q3":102.2,"2021-Q4":100.4,"2022-Q1":97.5,"2022-Q2":94.1,"2022-Q3":92.8,"2022-Q4":92.8,"2023-Q1":94.5,"2023-Q2":97.1,"2023-Q3":97.9,"2023-Q4":98.1,"2024-Q1":98.8,"2024-Q2":99.6,"2024-Q3":99.9,"2024-Q4":99.1,"2025-Q1":98.9,"2025-Q2":99.1,"2025-Q3":99.6,"2025-Q4":99.7,"2026-Q1":99.2,"2026-Q2":98.4,"2026-Q3":99.8},"latest":{"month":"2026-10","value":98.9},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"DEU","name":"Germany","region":"Europe","annual":{"2020":99.8,"2021":100.6,"2022":97.8,"2023":98.6,"2024":99.5,"2025":99.6},"quarterly":{"2020-Q1":100.5,"2020-Q2":99.0,"2020-Q3":99.8,"2020-Q4":99.8,"2021-Q1":99.9,"2021-Q2":100.7,"2021-Q3":101.2,"2021-Q4":100.9,"2022-Q1":99.8,"2022-Q2":97.9,"2022-Q3":96.8,"2022-Q4":96.9,"2023-Q1":98.1,"2023-Q2":98.8,"2023-Q3":98.8,"2023-Q4":98.6,"2024-Q1":98.9,"2024-Q2":99.6,"2024-Q3":99.7,"2024-Q4":99.6,"2025-Q1":99.5,"2025-Q2":99.7,"2025-Q3":99.7,"2025-Q4":99.5,"2026-Q1":99.2,"2026-Q2":98.7,"2026-Q3":99.0},"latest":{"month":"2026-10","value":98.8},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"FRA","name":"France","region":"Europe","annual":{"2020":98.9,"2021":100.5,"2022":97.6,"2023":98.1,"2024":98.8,"2025":98.2},"quarterly":{"2020-Q1":99.5,"2020-Q2":98.3,"2020-Q3":99.2,"2020-Q4":98.8,"2021-Q1":99.2,"2021-Q2":100.9,"2021-Q3":101.3,"2021-Q4":100.6,"2022-Q1":99.0,"2022-Q2":97.3,"2022-Q3":97.0,"2022-Q4":97.2,"2023-Q1":97.1,"2023-Q2":98.0,"2023-Q3":98.5,"2023-Q4":98.7,"2024-Q1":98.9,"2024-Q2":98.7,"2024-Q3":98.9,"2024-Q4":98.6,"2025-Q1":98.6,"2025-Q2":98.1,"2025-Q3":97.8,"2025-Q4":98.2,"2026-Q1":98.2,"2026-Q2":97.3,"2026-Q3":97.6},"latest":{"month":"2026-10","value":97.0},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"ESP","name":"Spain","region":"Europe","annual":{"2020":97.2,"2021":100.1,"2022":96.1,"2023":98.2,"2024":99.6,"2025":99.6},"quarterly":{"2020-Q1":99.9,"2020-Q2":96.0,"2020-Q3":96.1,"2020-Q4":96.8,"2021-Q1":98.4,"2021-Q2":100.5,"2021-Q3":101.2,"2021-Q4":100.3,"2022-Q1":98.5,"2022-Q2":95.8,"2022-Q3":94.4,"2022-Q4":95.8,"2023-Q1":97.3,"2023-Q2":98.4,"2023-Q3":99.0,"2023-Q4":98.2,"2024-Q1":98.8,"2024-Q2":99.6,"2024-Q3":99.8,"2024-Q4":100.3,"2025-Q1":99.9,"2025-Q2":99.2,"2025-Q3":99.5,"2025-Q4":99.9,"2026-Q1":99.4,"2026-Q2":98.6,"2026-Q3":98.8},"latest":{"month":"2026-10","value":98.9},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"ITA","name":"Italy","region":"Europe","annual":{"2020":99.6,"2021":102.2,"2022":98.3,"2023":99.6,"2024":99.6,"2025":99.6},"quarterly":{"2020-Q1":99.8,"2020-Q2":98.8,"2020-Q3":100.0,"2020-Q4":99.7,"2021-Q1":100.6,"2021-Q2":102.4,"2021-Q3":103.2,"2021-Q4":102.6,"2022-Q1":100.1,"2022-Q2":97.7,"2022-Q3":97.0,"2022-Q4":98.4,"2023-Q1":99.7,"2023-Q2":99.9,"2023-Q3":99.5,"2023-Q4":99.2,"2024-Q1":99.5,"2024-Q2":99.3,"2024-Q3":99.7,"2024-Q4":100.0,"2025-Q1":99.8,"2025-Q2":99.4,"2025-Q3":99.6,"2025-Q4":99.7,"2026-Q1":99.3,"2026-Q2":98.2,"2026-Q3":98.2},"latest":{"month":"2026-10","value":97.7},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"POL","name":"Poland","region":"Europe","annual":{"2020":99.6,"2021":99.5,"2022":96.4,"2023":98.7,"2024":100.5,"2025":100.5},"quarterly":{"2020-Q1":101.2,"2020-Q2":98.6,"2020-Q3":99.8,"2020-Q4":98.9,"2021-Q1":99.0,"2021-Q2":100.0,"2021-Q3":100.2,"2021-Q4":98.9,"2022-Q1":97.5,"2022-Q2":96.4,"2022-Q3":95.8,"2022-Q4":95.8,"2023-Q1":97.1,"2023-Q2":98.3,"2023-Q3":99.3,"2023-Q4":100.2,"2024-Q1":100.8,"2024-Q2":100.6,"2024-Q3":100.3,"2024-Q4":100.1,"2025-Q1":100.1,"2025-Q2":100.4,"2025-Q3":100.7,"2025-Q4":100.7,"2026-Q1":100.6,"2026-Q2":100.5,"2026-Q3":100.6},"latest":{"month":"2026-10","value":100.3},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"NGA","name":"Nigeria","region":"Africa","annual":{},"quarterly":{},"latest":null},{"iso":"ZAF","name":"South Africa","region":"Africa","annual":{"2020":97.5,"2021":98.8,"2022":97.8,"2023":97.4,"2024":98.9,"2025":98.4},"quarterly":{"2020-Q1":99.0,"2020-Q2":96.8,"2020-Q3":96.3,"2020-Q4":98.0,"2021-Q1":98.9,"2021-Q2":98.7,"2021-Q3":98.7,"2021-Q4":99.0,"2022-Q1":98.6,"2022-Q2":97.3,"2022-Q3":97.1,"2022-Q4":98.4,"2023-Q1":97.7,"2023-Q2":96.7,"2023-Q3":97.4,"2023-Q4":97.9,"2024-Q1":98.0,"2024-Q2":98.7,"2024-Q3":99.4,"2024-Q4":99.4,"2025-Q1":98.2,"2025-Q2":98.2,"2025-Q3":98.6,"2025-Q4":98.8,"2026-Q1":99.1,"2026-Q2":98.2,"2026-Q3":98.1},"latest":{"month":"2026-09","value":98.4},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"IND","name":"India","region":"Asia-Pacific","annual":{"2020":95.4,"2021":93.0,"2022":97.5,"2023":100.7,"2024":102.5,"2025":102.9},"quarterly":{"2020-Q1":99.7,"2020-Q2":94.4,"2020-Q3":93.0,"2020-Q4":94.5,"2021-Q1":93.9,"2021-Q2":91.8,"2021-Q3":92.2,"2021-Q4":94.1,"2022-Q1":96.2,"2022-Q2":97.4,"2022-Q3":97.8,"2022-Q4":98.6,"2023-Q1":99.5,"2023-Q2":100.2,"2023-Q3":101.1,"2023-Q4":102.0,"2024-Q1":102.6,"2024-Q2":102.8,"2024-Q3":102.3,"2024-Q4":102.1,"2025-Q1":102.3,"2025-Q2":102.6,"2025-Q3":103.1,"2025-Q4":103.4,"2026-Q1":102.7,"2026-Q2":101.2,"2026-Q3":100.2},"latest":{"month":"2026-09","value":100.0},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"IDN","name":"Indonesia","region":"Asia-Pacific","annual":{"2020":99.1,"2021":99.4,"2022":101.0,"2023":101.3,"2024":101.3,"2025":101.0},"quarterly":{"2020-Q1":100.6,"2020-Q2":98.5,"2020-Q3":98.4,"2020-Q4":98.7,"2021-Q1":98.9,"2021-Q2":99.5,"2021-Q3":98.9,"2021-Q4":100.5,"2022-Q1":100.7,"2022-Q2":101.1,"2022-Q3":101.2,"2022-Q4":101.0,"2023-Q1":101.2,"2023-Q2":101.4,"2023-Q3":101.3,"2023-Q4":101.2,"2024-Q1":101.3,"2024-Q2":101.3,"2024-Q3":101.2,"2024-Q4":101.4,"2025-Q1":101.3,"2025-Q2":100.9,"2025-Q3":100.8,"2025-Q4":101.2,"2026-Q1":101.3,"2026-Q2":101.0,"2026-Q3":100.8},"latest":{"month":"2026-09","value":100.8},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"SGP","name":"Singapore","region":"Asia-Pacific","annual":{},"quarterly":{},"latest":null},{"iso":"TWN","name":"Taiwan","region":"Asia-Pacific","annual":{},"quarterly":{},"latest":null},{"iso":"CHN","name":"China","region":"Asia-Pacific","annual":{"2020":102.7,"2021":103.1,"2022":96.8,"2023":95.3,"2024":95.0,"2025":95.3},"quarterly":{"2020-Q1":103.3,"2020-Q2":101.8,"2020-Q3":102.2,"2020-Q4":103.4,"2021-Q1":103.7,"2021-Q2":103.2,"2021-Q3":102.6,"2021-Q4":103.0,"2022-Q1":101.6,"2022-Q2":95.8,"2022-Q3":94.9,"2022-Q4":95.1,"2023-Q1":96.2,"2023-Q2":95.2,"2023-Q3":94.9,"2023-Q4":95.1,"2024-Q1":95.4,"2024-Q2":95.0,"2024-Q3":94.7,"2024-Q4":94.8,"2025-Q1":95.1,"2025-Q2":95.2,"2025-Q3":95.4,"2025-Q4":95.6,"2026-Q1":95.8,"2026-Q2":95.5,"2026-Q3":95.5},"latest":{"month":"2026-09","value":95.4},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"JPN","name":"Japan","region":"Asia-Pacific","annual":{"2020":97.2,"2021":98.7,"2022":97.6,"2023":98.3,"2024":98.9,"2025":98.2},"quarterly":{"2020-Q1":98.2,"2020-Q2":95.9,"2020-Q3":97.1,"2020-Q4":97.6,"2021-Q1":97.8,"2021-Q2":98.5,"2021-Q3":99.0,"2021-Q4":99.3,"2022-Q1":98.3,"2022-Q2":97.6,"2022-Q3":97.3,"2022-Q4":97.1,"2023-Q1":97.5,"2023-Q2":98.5,"2023-Q3":98.7,"2023-Q4":98.6,"2024-Q1":99.2,"2024-Q2":99.0,"2024-Q3":98.8,"2024-Q4":98.5,"2025-Q1":98.1,"2025-Q2":97.8,"2025-Q3":98.3,"2025-Q4":98.8,"2026-Q1":98.7,"2026-Q2":97.9,"2026-Q3":98.3},"latest":{"month":"2026-10","value":98.4},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"KOR","name":"South Korea","region":"Asia-Pacific","annual":{"2020":98.1,"2021":100.4,"2022":99.2,"2023":99.5,"2024":99.8,"2025":100.4},"quarterly":{"2020-Q1":98.8,"2020-Q2":96.8,"2020-Q3":97.8,"2020-Q4":98.8,"2021-Q1":99.5,"2021-Q2":100.6,"2021-Q3":100.6,"2021-Q4":100.7,"2022-Q1":100.5,"2022-Q2":99.9,"2022-Q3":98.4,"2022-Q4":98.2,"2023-Q1":98.6,"2023-Q2":99.6,"2023-Q3":100.1,"2023-Q4":99.7,"2024-Q1":100.0,"2024-Q2":99.9,"2024-Q3":100.1,"2024-Q4":99.4,"2025-Q1":98.8,"2025-Q2":100.1,"2025-Q3":101.4,"2025-Q4":101.4,"2026-Q1":101.1,"2026-Q2":100.6,"2026-Q3":100.7},"latest":{"month":"2026-10","value":100.7},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"AUS","name":"Australia","region":"Asia-Pacific","annual":{"2020":99.3,"2021":100.9,"2022":98.8,"2023":97.9,"2024":98.4,"2025":99.4},"quarterly":{"2020-Q1":99.1,"2020-Q2":98.5,"2020-Q3":98.9,"2020-Q4":100.6,"2021-Q1":101.2,"2021-Q2":101.3,"2021-Q3":100.7,"2021-Q4":100.5,"2022-Q1":100.0,"2022-Q2":99.0,"2022-Q3":98.2,"2022-Q4":97.9,"2023-Q1":97.9,"2023-Q2":97.9,"2023-Q3":97.9,"2023-Q4":98.0,"2024-Q1":98.2,"2024-Q2":98.1,"2024-Q3":98.4,"2024-Q4":99.1,"2025-Q1":99.2,"2025-Q2":99.2,"2025-Q3":99.5,"2025-Q4":99.6,"2026-Q1":99.0,"2026-Q2":98.2,"2026-Q3":98.3},"latest":{"month":"2026-10","value":98.0},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"},{"iso":"NZL","name":"New Zealand","region":"Asia-Pacific","annual":{"2020":99.2,"2021":99.6,"2022":97.5,"2023":97.1,"2024":98.1,"2025":98.3},"quarterly":{"2020-Q1":99.8,"2020-Q2":99.1,"2020-Q3":98.7,"2020-Q4":99.3,"2021-Q1":99.8,"2021-Q2":99.8,"2021-Q3":99.6,"2021-Q4":99.2,"2022-Q1":98.5,"2022-Q2":97.4,"2022-Q3":97.3,"2022-Q4":97.0,"2023-Q1":96.6,"2023-Q2":97.0,"2023-Q3":97.1,"2023-Q4":97.6,"2024-Q1":98.2,"2024-Q2":97.7,"2024-Q3":97.8,"2024-Q4":98.6,"2025-Q1":98.3,"2025-Q2":98.1,"2025-Q3":98.2,"2025-Q4":98.5,"2026-Q1":98.6,"2026-Q2":97.6,"2026-Q3":97.6},"latest":{"month":"2026-09","value":97.9},"source":"OECD, Composite leading indicators: Consumer confidence indicator (CCI), amplitude adjusted, long-term average = 100"}]}, MAX = 5, SLOTS = 5;
+  var DEFAULT = ["USA", "MEX", "DEU", "CHN", "IND"];
+  var avail = D.countries.filter(function (c) { return c.latest; });
+  var byIso = {}; avail.forEach(function (c) { byIso[c.iso] = c; });
+  var state = { mode: "quarterly", sel: [] };   // sel: [{iso, slot}]
+  var QL = function (q) { return "Q" + q.slice(-1) + " " + q.slice(0, 4); };
+  var fmt = function (v) { return v.toFixed(1); };
+  var chart = document.getElementById("chart"), tip = document.getElementById("tip");
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function color(slot) { return "var(--s" + (slot + 1) + ")"; }
+
+  // ---- state from URL hash (shareable) ----
+  function readHash() {
+    var h = location.hash.replace(/^#/, ""), p = {};
+    h.split("&").forEach(function (kv) { var a = kv.split("="); if (a[0]) p[a[0]] = decodeURIComponent(a[1] || ""); });
+    var list = (p.c ? p.c.split(",") : DEFAULT).filter(function (i) { return byIso[i]; }).slice(0, MAX);
+    state.sel = list.map(function (iso, i) { return { iso: iso, slot: i }; });
+    state.mode = p.v === "y" ? "annual" : "quarterly";
+  }
+  function writeHash() {
+    var h = "#c=" + state.sel.map(function (s) { return s.iso; }).join(",") + "&v=" + (state.mode === "annual" ? "y" : "q");
+    try { history.replaceState(null, "", h); } catch (e) {}
+  }
+
+  // ---- country chips ----
+  var chips = document.getElementById("chips"), chipEls = {};
+  avail.forEach(function (c) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "chip";
+    var k = document.createElement("i"); k.className = "key"; b.appendChild(k);
+    b.appendChild(document.createTextNode(c.name));
+    b.addEventListener("click", function () { toggle(c.iso); });
+    chips.appendChild(b); chipEls[c.iso] = b;
+  });
+  function toggle(iso) {
+    var i = state.sel.findIndex(function (s) { return s.iso === iso; });
+    if (i >= 0) state.sel.splice(i, 1);
+    else if (state.sel.length < MAX) {
+      var used = state.sel.map(function (s) { return s.slot; }), slot = 0;
+      while (used.indexOf(slot) >= 0) slot++;
+      state.sel.push({ iso: iso, slot: slot });
+    }
+    update();
+  }
+  document.getElementById("pick-clear").addEventListener("click", function () { state.sel = []; update(); });
+  document.querySelectorAll(".seg button").forEach(function (b) {
+    b.addEventListener("click", function () { state.mode = b.dataset.mode; update(); });
+  });
+
+  // ---- chart ----
+  var geo = null, active = -1;
+  function series() {
+    var xs = state.mode === "annual" ? D.years : D.quarters;
+    return { xs: xs, lines: state.sel.map(function (s) {
+      var c = byIso[s.iso], src = state.mode === "annual" ? c.annual : c.quarterly;
+      return { c: c, slot: s.slot, vals: xs.map(function (x) { return src[x] === undefined ? null : src[x]; }) };
+    }) };
+  }
+  function draw() {
+    chart.innerHTML = ""; tip.hidden = true; active = -1;
+    var S = series();
+    if (!S.lines.length) { chart.innerHTML = "<div class='empty'>Pick up to five countries above to compare their trends.</div>"; geo = null; return; }
+    var W = Math.max(300, chart.clientWidth), narrow = W < 560;
+    var H = narrow ? 300 : 380, m = { t: 14, r: narrow ? 46 : 128, b: 30, l: 38 };
+    var all = []; S.lines.forEach(function (l) { l.vals.forEach(function (v) { if (v !== null) all.push(v); }); });
+    var lo = Math.min.apply(null, all.concat([100])), hi = Math.max.apply(null, all.concat([100]));
+    var step = (hi - lo) > 8 ? 2 : (hi - lo) > 3 ? 1 : 0.5;
+    lo = Math.floor((lo - 0.3) / step) * step; hi = Math.ceil((hi + 0.3) / step) * step;
+    var pw = W - m.l - m.r, ph = H - m.t - m.b, n = S.xs.length;
+    var X = function (i) { return m.l + (n === 1 ? pw / 2 : i * pw / (n - 1)); };
+    var Y = function (v) { return m.t + (hi - v) / (hi - lo) * ph; };
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H });
+    // grid + y labels
+    var ticks = []; for (var v = lo; v <= hi + 1e-9; v += step) ticks.push(+v.toFixed(2));
+    var every = Math.ceil(ticks.length / 7);
+    ticks.forEach(function (t, i) {
+      if (i % every && t !== 100) return;
+      if (t !== 100) el("line", { x1: m.l, x2: m.l + pw, y1: Y(t), y2: Y(t), stroke: "var(--grid)", "stroke-width": 1 }, svg);
+      var tx = el("text", { x: m.l - 8, y: Y(t) + 4, "text-anchor": "end" }, svg); tx.textContent = t % 1 ? t.toFixed(1) : t;
+    });
+    // reference line at 100
+    el("line", { x1: m.l, x2: m.l + pw, y1: Y(100), y2: Y(100), stroke: "var(--ref)", "stroke-width": 1.25, "stroke-dasharray": "4 3" }, svg);
+    // x labels
+    S.xs.forEach(function (x, i) {
+      var lab = null;
+      if (state.mode === "annual") lab = x;
+      else if (x.slice(-1) === "1") lab = x.slice(0, 4);
+      if (lab === null) return;
+      if (state.mode === "quarterly") el("line", { x1: X(i), x2: X(i), y1: m.t + ph, y2: m.t + ph + 4, stroke: "var(--ref)" }, svg);
+      var t = el("text", { x: X(i), y: H - 8, "text-anchor": state.mode === "quarterly" && narrow ? "start" : "middle" }, svg);
+      t.textContent = narrow && state.mode === "quarterly" ? "’" + lab.slice(2) : lab;
+    });
+    // crosshair (under lines)
+    var cross = el("line", { y1: m.t, y2: m.t + ph, stroke: "var(--cross)", "stroke-width": 1, visibility: "hidden" }, svg);
+    // lines
+    var ends = [], dots = [];
+    S.lines.forEach(function (l) {
+      var d = "", pen = false, last = -1;
+      l.vals.forEach(function (v, i) {
+        if (v === null) { pen = false; return; }
+        d += (pen ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1); pen = true; last = i;
+      });
+      el("path", { d: d, fill: "none", stroke: color(l.slot), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+      if (state.mode === "annual") l.vals.forEach(function (v, i) {
+        if (v !== null) el("circle", { cx: X(i), cy: Y(v), r: 4, fill: color(l.slot), stroke: "var(--card)", "stroke-width": 2 }, svg);
+      });
+      if (last >= 0) ends.push({ l: l, x: X(last), y: Y(l.vals[last]), v: l.vals[last] });
+      dots.push(el("circle", { r: 5, fill: color(l.slot), stroke: "var(--card)", "stroke-width": 2, visibility: "hidden" }, svg));
+    });
+    // direct end labels, de-collided
+    ends.sort(function (a, b) { return a.y - b.y; });
+    var gap = 15;
+    ends.forEach(function (e, i) { e.ly = e.y; if (i && e.ly - ends[i - 1].ly < gap) e.ly = ends[i - 1].ly + gap; });
+    for (var i = ends.length - 1; i >= 0; i--) { var maxY = (i === ends.length - 1 ? m.t + ph + 4 : ends[i + 1].ly - gap); if (ends[i].ly > maxY) ends[i].ly = maxY; }
+    ends.forEach(function (e) {
+      var t = el("text", { x: e.x + 8, y: e.ly + 4, class: "endlab" }, svg);
+      t.textContent = narrow ? e.l.c.iso : e.l.c.name;
+    });
+    chart.appendChild(svg);
+    geo = { X: X, Y: Y, n: n, m: m, pw: pw, S: S, cross: cross, dots: dots, W: W };
+    var lbl = S.lines.map(function (l) { var v = l.vals.filter(function (x) { return x !== null; }); return l.c.name + " " + (v.length ? fmt(v[v.length - 1]) : "no data"); }).join("; ");
+    chart.setAttribute("aria-label", "Line chart of consumer confidence, " + (state.mode === "annual" ? "annual averages " + D.years[0] + " to " + D.years[D.years.length - 1] : "quarterly averages " + QL(D.quarters[0]) + " to " + QL(D.quarters[D.quarters.length - 1])) + ". Latest values: " + lbl + ".");
+  }
+  function show(i) {
+    if (!geo) return; i = Math.max(0, Math.min(geo.n - 1, i)); active = i;
+    var x = geo.X(i), S = geo.S;
+    geo.cross.setAttribute("x1", x); geo.cross.setAttribute("x2", x); geo.cross.setAttribute("visibility", "visible");
+    var rows = [];
+    S.lines.forEach(function (l, k) {
+      var v = l.vals[i], dot = geo.dots[k];
+      if (v === null) { dot.setAttribute("visibility", "hidden"); return; }
+      dot.setAttribute("cx", x); dot.setAttribute("cy", geo.Y(v)); dot.setAttribute("visibility", "visible");
+      rows.push({ l: l, v: v });
+    });
+    rows.sort(function (a, b) { return b.v - a.v; });
+    tip.innerHTML = "";
+    var h = document.createElement("div"); h.className = "t-h";
+    h.textContent = state.mode === "annual" ? S.xs[i] + " average" : QL(S.xs[i]) + " average"; tip.appendChild(h);
+    rows.forEach(function (r) {
+      var row = document.createElement("div"); row.className = "t-r";
+      var k = document.createElement("i"); k.style.background = color(r.l.slot);
+      var b = document.createElement("b"); b.textContent = fmt(r.v);
+      var s = document.createElement("span"); s.textContent = r.l.c.name;
+      row.appendChild(k); row.appendChild(b); row.appendChild(s); tip.appendChild(row);
+    });
+    if (!rows.length) { var e = document.createElement("div"); e.textContent = "No data for this period"; tip.appendChild(e); }
+    tip.hidden = false;
+    var cr = tip.parentNode.getBoundingClientRect(), chr = chart.getBoundingClientRect();
+    var scale = chr.width / geo.W, px = chr.left - cr.left + x * scale;
+    var left = px + 14; if (left + tip.offsetWidth > cr.width - 6) left = px - 14 - tip.offsetWidth;
+    tip.style.left = Math.max(6, left) + "px"; tip.style.top = (chr.top - cr.top + 10) + "px";
+  }
+  function hide() { if (!geo) return; tip.hidden = true; geo.cross.setAttribute("visibility", "hidden"); geo.dots.forEach(function (d) { d.setAttribute("visibility", "hidden"); }); active = -1; }
+  function idxFromEvent(ev) {
+    var r = chart.getBoundingClientRect(), x = (ev.clientX - r.left) * geo.W / r.width;
+    return Math.round((x - geo.m.l) / geo.pw * (geo.n - 1));
+  }
+  chart.addEventListener("pointermove", function (ev) { if (geo) show(idxFromEvent(ev)); });
+  chart.addEventListener("pointerdown", function (ev) { if (geo) show(idxFromEvent(ev)); });
+  chart.addEventListener("pointerleave", function (ev) { if (ev.pointerType === "mouse") hide(); });
+  chart.addEventListener("keydown", function (ev) {
+    if (!geo) return;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") { ev.preventDefault(); show(active < 0 ? geo.n - 1 : active + (ev.key === "ArrowRight" ? 1 : -1)); }
+    else if (ev.key === "Escape") hide();
+  });
+  chart.addEventListener("focus", function () { if (geo && active < 0) show(geo.n - 1); });
+  chart.addEventListener("blur", hide);
+
+  function update() {
+    var full = state.sel.length >= MAX;
+    avail.forEach(function (c) {
+      var s = state.sel.find(function (x) { return x.iso === c.iso; }), b = chipEls[c.iso];
+      b.setAttribute("aria-pressed", String(!!s));
+      b.disabled = !s && full;
+      b.querySelector(".key").style.background = s ? color(s.slot) : "transparent";
+    });
+    document.getElementById("pick-count").textContent = state.sel.length + " of " + MAX + " selected" + (full ? " · remove one to add another" : "");
+    document.querySelectorAll(".seg button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)); });
+    document.getElementById("viz-title").textContent = state.mode === "annual"
+      ? "Annual average, " + D.years[0] + "–" + D.years[D.years.length - 1]
+      : "Quarterly average, " + QL(D.quarters[0]) + " – " + QL(D.quarters[D.quarters.length - 1]);
+    var lg = document.getElementById("legend"); lg.innerHTML = "";
+    state.sel.forEach(function (s) {
+      var sp = document.createElement("span"), k = document.createElement("i");
+      k.style.background = color(s.slot); sp.appendChild(k); sp.appendChild(document.createTextNode(byIso[s.iso].name)); lg.appendChild(sp);
+    });
+    if (state.sel.length) { var rs = document.createElement("span"), rk = document.createElement("i"); rk.className = "ref"; rs.appendChild(rk); rs.appendChild(document.createTextNode("100 = long-run average")); lg.appendChild(rs); }
+    writeHash(); draw();
+  }
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(draw, 120); });
+  readHash(); update();
+
+  // ---- table: annual + last five quarters + latest ----
+  var Q5 = D.quarters.slice(-5);
+  var t = document.getElementById("table"), h = "<thead><tr class='grp'><th></th><th colspan='" + D.years.length + "'>Annual average</th><th class='sep' colspan='5'>Quarterly average</th><th class='sep'>Latest</th></tr><tr><th>Country</th>";
+  D.years.forEach(function (y) { h += "<th>" + y + "</th>"; });
+  Q5.forEach(function (q, i) { h += "<th" + (i === 0 ? " class='sep'" : "") + ">" + QL(q) + "</th>"; });
+  h += "<th class='sep'>Month</th></tr></thead><tbody>";
+  var region = "";
+  D.countries.forEach(function (c) {
+    if (c.region !== region) { region = c.region; h += "<tr class='region'><td colspan='" + (2 + D.years.length + 5) + "'>" + region + "</td></tr>"; }
+    h += "<tr><td>" + c.name + "</td>";
+    D.years.forEach(function (y) { var v = c.annual[y]; h += v === undefined ? "<td class='na'>–</td>" : "<td>" + fmt(v) + "</td>"; });
+    Q5.forEach(function (q, i) { var v = c.quarterly[q]; h += "<td class='" + (i === 0 ? "sep " : "") + (v === undefined ? "na" : "") + "'>" + (v === undefined ? "–" : fmt(v)) + "</td>"; });
+    h += c.latest ? "<td class='sep'>" + fmt(c.latest.value) + " <span class='ptag'>(" + c.latest.month + ")</span></td>" : "<td class='sep na'>–</td>";
+    h += "</tr>";
+  });
+  t.innerHTML = h + "</tbody>";
+
+  // ---- CSV download ----
+  document.getElementById("dl").addEventListener("click", function () {
+    var cols = D.years.concat(D.quarters), rows = [["country", "iso"].concat(cols).concat(["latest_month", "latest_value"])];
+    avail.forEach(function (c) {
+      rows.push([c.name, c.iso].concat(D.years.map(function (y) { return c.annual[y] === undefined ? "" : c.annual[y]; }))
+        .concat(D.quarters.map(function (q) { return c.quarterly[q] === undefined ? "" : c.quarterly[q]; }))
+        .concat([c.latest.month, c.latest.value]));
+    });
+    var blob = new Blob([rows.map(function (r) { return r.join(","); }).join("\n")], { type: "text/csv" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "consumer-confidence-oecd.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
+
+</main>
+<footer class="footer"><div class="wrap">
+<span>© 2026 Global Foodservice Insights</span>
+<span><a href="feed.xml">RSS feed</a> · <a href="about.html">About these newsletters</a></span>
+</div></footer>
+</body>
+</html>
