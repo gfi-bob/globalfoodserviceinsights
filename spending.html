@@ -49,6 +49,25 @@
 </div>
 </section>
 
+
+<section class="viz-root" id="trends">
+<div class="section-head"><h2>Trends by country</h2></div>
+<p class="small-note">Pick up to six countries to compare how growth has moved over time.</p>
+<div class="viz-controls">
+  <div class="seg" role="group" aria-label="Frequency" id="tr-freq">
+    <span class="seg-label">View</span>
+    <button type="button" data-f="annual" aria-pressed="true">Annual</button>
+    <button type="button" data-f="quarterly" aria-pressed="false">Quarterly</button>
+  </div>
+</div>
+<div class="tr-chips" id="tr-chips" role="group" aria-label="Countries"></div>
+<div class="viz-card">
+  <div class="viz-head"><h2 id="tr-title">Annual % change, 2021–2025</h2><div class="tr-legend" id="tr-legend"></div></div>
+  <div class="tr-wrap"><svg id="tr-svg" role="img" aria-labelledby="tr-title"></svg><div id="tr-tip" class="viz-tip" hidden></div></div>
+  <p id="tr-note" class="viz-missing"></p>
+</div>
+</section>
+
 <section class="data-section">
 <div class="section-head"><h2>All figures</h2></div>
 <p class="small-note">% change from the same period a year earlier. A dash means no comparable figure has been published. Hover a <span class="flag-demo">◆</span> for notes.</p>
@@ -116,11 +135,29 @@
 .source-list li { margin-bottom: 8px; }
 .teaser { color: var(--ink-2); max-width: 70ch; margin: 0 0 8px; }
 @media (max-width: 640px) { .bars { grid-template-columns: 112px 1fr; } .bar .name { font-size: 13px; } .viz-card { padding: 18px 14px; } }
+
+.tr-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.tr-chips button { font: 500 13px/1 var(--sans); color: var(--ink-2); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 7px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.tr-chips button:hover { border-color: var(--ink-3); color: var(--ink); }
+.tr-chips button[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); font-weight: 600; }
+.tr-chips button i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.tr-chips button:disabled { opacity: .45; cursor: not-allowed; }
+.tr-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.tr-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.tr-legend i { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+.tr-wrap { position: relative; }
+#tr-svg { width: 100%; height: 380px; display: block; overflow: visible; }
+#tr-svg text { font: 12px var(--sans); fill: var(--ink-3); }
+#tr-svg .lbl { font: 600 12px var(--sans); fill: var(--ink); }
+#tr-svg .grid { stroke: var(--rule); stroke-width: 1; }
+#tr-svg .zero { stroke: var(--zero); stroke-width: 1; }
+#tr-svg .xhair { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 3; }
 </style>
 
 <script>
 (function () {
   var D = {"countries":[{"iso":"USA","name":"United States","region":"Americas","annual":{"2021":25.5,"2022":15.1,"2023":10.1,"2024":5.2,"2025":5.1},"quarterly":{"2025-Q3":5.8,"2025-Q4":4.3,"2026-Q1":3.7,"2026-Q2":3.7,"2026-Q3":6.0},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), food & beverage serving services, current prices","quarterly_source":"US Census Bureau, retail sales: food services and drinking places (FRED RSFSDP), seasonally adjusted, $ millions","annual_notes":{"2025":"BEA via FRED (DFSERC1A027NBEA): personal consumption expenditures on food services, 2025 vs 2024"},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"CAN","name":"Canada","region":"Americas","annual":{"2021":21.0,"2022":30.8,"2023":11.0,"2024":2.9,"2025":4.7},"quarterly":{"2025-Q3":4.5,"2025-Q4":3.8,"2026-Q1":6.0,"2026-Q2":5.2},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), food & beverage serving services, current prices","quarterly_source":"Statistics Canada, Monthly survey of food services and drinking places (table 21-10-0019-01): total receipts, seasonally adjusted","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"MEX","name":"Mexico","region":"Americas","annual":{"2021":18.8,"2022":14.4,"2023":11.1,"2024":3.8},"quarterly":{"2025-Q3":7.7,"2025-Q4":7.5,"2026-Q1":7.2,"2026-Q2":6.7,"2026-Q3":6.3},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), food & beverage serving services, current prices","quarterly_source":"OECD, Consumer price indices (COICOP 2018): restaurants and accommodation services, % change vs same quarter a year earlier \u2014 PRICES, not spending","annual_notes":{},"quarterly_kind":"cpi","annual_measure":"Food & beverage serving services"},{"iso":"BRA","name":"Brazil","region":"Americas","annual":{"2021":22.8,"2022":34.5,"2023":13.8,"2024":10.5,"2025":10.2},"quarterly":{"2025-Q3":9.2,"2025-Q4":8.2,"2026-Q1":9.6,"2026-Q2":10.1,"2026-Q3":11.2},"annual_source":"IBGE, Pesquisa Mensal de Servi\u00e7os (SIDRA tables 8162 and 8688): nominal revenue, accommodation and food services, change in the calendar year vs prior year","quarterly_source":"IBGE, Pesquisa Mensal de Servi\u00e7os (SIDRA table 8688): nominal revenue index (2022=100), food services (1.1.2 Alimenta\u00e7\u00e3o)","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Accommodation & food services revenue"},{"iso":"GBR","name":"United Kingdom","region":"Europe","annual":{"2021":38.3,"2022":27.5,"2023":7.5,"2024":6.4,"2025":6.2},"quarterly":{"2025-Q3":5.3,"2025-Q4":5.6,"2026-Q1":6.0,"2026-Q2":5.9},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), food & beverage serving services, current prices","quarterly_source":"UK Office for National Statistics, household final consumption expenditure: restaurants & hotels, current prices, seasonally adjusted, four-quarter growth (series KGC8, Quarterly National Accounts, 30 Sep 2026)","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"DEU","name":"Germany","region":"Europe","annual":{"2021":11.4,"2022":60.4,"2023":12.1,"2024":3.4,"2025":2.0},"quarterly":{"2025-Q3":2,"2025-Q4":2.6,"2026-Q1":2.3,"2026-Q2":2.1},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Eurostat short-term business statistics (sts_setu_q): net turnover, food & beverage service activities (NACE I56), calendar adjusted, % change vs same quarter a year earlier; updated 11 Nov 2026","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"FRA","name":"France","region":"Europe","annual":{"2021":16.3,"2022":41.9,"2023":11.1,"2024":5.8,"2025":4.5},"quarterly":{"2025-Q3":4.7,"2025-Q4":4.1,"2026-Q1":3.6,"2026-Q2":2.2},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Eurostat short-term business statistics (sts_setu_q): net turnover, food & beverage service activities (NACE I56), calendar adjusted, % change vs same quarter a year earlier; updated 11 Nov 2026","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"ESP","name":"Spain","region":"Europe","annual":{"2021":34.6,"2022":37.2,"2023":15.0,"2024":12.9,"2025":10.3},"quarterly":{"2025-Q3":2.3,"2025-Q4":2.9,"2026-Q1":4,"2026-Q2":3.3},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Eurostat short-term business statistics (sts_setu_q): net turnover, food & beverage service activities (NACE I56), calendar adjusted, % change vs same quarter a year earlier; updated 11 Nov 2026","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"ITA","name":"Italy","region":"Europe","annual":{"2021":20.3,"2022":25.8,"2023":10.8,"2024":4.8,"2025":3.8},"quarterly":{"2025-Q3":1.8,"2025-Q4":1.1,"2026-Q1":0.7,"2026-Q2":0.9},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Eurostat short-term business statistics (sts_setu_q): net turnover, food & beverage service activities (NACE I56), calendar adjusted, % change vs same quarter a year earlier; updated 11 Nov 2026","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"POL","name":"Poland","region":"Europe","annual":{"2021":29.4,"2022":34.4,"2023":18.6,"2024":12.6,"2025":9.7},"quarterly":{"2025-Q3":10.2,"2025-Q4":10.8,"2026-Q1":6.8,"2026-Q2":4.8},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Eurostat short-term business statistics (sts_setu_q): net turnover, food & beverage service activities (NACE I56), calendar adjusted, % change vs same quarter a year earlier; updated 11 Nov 2026","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"NGA","name":"Nigeria","region":"Africa","annual":{},"quarterly":{"2026-Q1":4.4,"2026-Q2":7.0},"annual_source":null,"quarterly_source":"National Bureau of Statistics (Nigeria), GDP report: accommodation and food services, real output growth vs same quarter a year earlier, as reported for Q2 2026 \u2014 OUTPUT, not consumer spending","annual_notes":{},"quarterly_kind":"output"},{"iso":"ZAF","name":"South Africa","region":"Africa","annual":{"2021":30.9,"2022":26.4,"2023":11.0,"2024":3.8,"2025":8.2},"quarterly":{"2025-Q3":9.9,"2025-Q4":9.9,"2026-Q1":9.3,"2026-Q2":6.1},"annual_source":"Statistics South Africa, Food and beverages (P6420), total income of the food and beverages industry at current prices, R million (time series release 2026-08); annual = sum of months","quarterly_source":"Statistics South Africa, Food and beverages (P6420), total income of the food and beverages industry at current prices, R million (time series release 2026-08)","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage industry income"},{"iso":"IND","name":"India","region":"Asia-Pacific","annual":{},"quarterly":{},"annual_source":null,"quarterly_source":null,"annual_notes":{},"quarterly_kind":"spending"},{"iso":"IDN","name":"Indonesia","region":"Asia-Pacific","annual":{"2025":6.4},"quarterly":{"2025-Q3":6.3,"2026-Q1":7.4,"2026-Q2":6.5,"2026-Q3":6.6},"annual_source":"BPS-Statistics Indonesia: household consumption on restaurants and hotels, real growth, 2025","quarterly_source":"BPS-Statistics Indonesia, GDP by expenditure: household consumption on restaurants and hotels, real (constant-price) growth vs same quarter a year earlier, as reported at BPS GDP releases","annual_notes":{},"quarterly_kind":"real","annual_measure":"Restaurant & hotel spending (real)","annual_real":true},{"iso":"SGP","name":"Singapore","region":"Asia-Pacific","annual":{"2021":3.9,"2022":24.7,"2023":9.3,"2024":2.7,"2025":0.6},"quarterly":{"2025-Q3":0.6,"2025-Q4":1.7,"2026-Q1":1.3,"2026-Q2":-0.5,"2026-Q3":-1.0},"annual_source":"Singapore Department of Statistics, Food & Beverage Services Index (2025=100) at current prices, annual (table M602161)","quarterly_source":"Singapore Department of Statistics, Food & Beverage Services Index (2025=100) at current prices, quarterly (table M602251)","annual_notes":{},"quarterly_kind":"spending","annual_measure":"F&B services sales"},{"iso":"TWN","name":"Taiwan","region":"Asia-Pacific","annual":{"2021":-6.8,"2022":19.1,"2023":20.4,"2024":3.6,"2025":2.9},"quarterly":{"2025-Q3":2.1,"2025-Q4":3.5,"2026-Q1":3.7,"2026-Q2":4.7,"2026-Q3":3.9},"annual_source":"Ministry of Economic Affairs (Taiwan), Department of Statistics: sales of food and beverage service activities, annual growth rate","quarterly_source":"Ministry of Economic Affairs (Taiwan), Department of Statistics, Sales of Wholesale, Retail and Food Services (Sept 2026 release, Table 4): food and beverage service activities, NT$ million and year-on-year %; 2025 Q2/Q3 growth as reported by MOEA","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage services sales"},{"iso":"CHN","name":"China","region":"Asia-Pacific","annual":{"2021":18.6,"2022":-6.3,"2023":20.4,"2024":5.3,"2025":3.2},"quarterly":{"2025-Q3":1.4,"2025-Q4":3.0,"2026-Q1":4.2,"2026-Q2":1.3,"2026-Q3":1.5},"annual_source":"National Bureau of Statistics of China: income of the catering industry, annual growth","quarterly_source":"National Bureau of Statistics of China, monthly retail sales release: income of the catering industry (100 million yuan) and year-on-year growth; quarterly growth derived from monthly values and NBS-reported growth rates","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Catering industry revenue"},{"iso":"JPN","name":"Japan","region":"Asia-Pacific","annual":{"2021":0.7,"2022":16.1,"2023":13.9,"2024":3.9,"2025":7.3},"quarterly":{"2025-Q3":7.3,"2025-Q4":7.3,"2026-Q1":6.9,"2026-Q2":7.0},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), food & beverage serving services, current prices","quarterly_source":"Japan Foodservice Association (JF), monthly foodservice market survey: all-store sales vs same month a year earlier (member companies); quarter = average of the three months","annual_notes":{"2025":"Japan Foodservice Association annual survey: all-store sales 2025 vs 2024 (107.3%)"},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"KOR","name":"South Korea","region":"Asia-Pacific","annual":{"2021":5.6,"2022":21.0,"2023":7.5,"2024":3.8,"2025":3.0},"quarterly":{"2025-Q3":3.2,"2025-Q4":3.0,"2026-Q1":2.9,"2026-Q2":2.6,"2026-Q3":2.8},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP 2018), restaurants & hotels, current prices","quarterly_source":"OECD, Consumer price indices (COICOP 1999): restaurants and hotels, % change vs same quarter a year earlier \u2014 PRICES, not spending","annual_notes":{},"quarterly_kind":"cpi","annual_measure":"Restaurants & hotels"},{"iso":"AUS","name":"Australia","region":"Asia-Pacific","annual":{"2021":14.6,"2022":34.0,"2023":6.4,"2024":4.2,"2025":4.9},"quarterly":{"2025-Q3":5.7,"2025-Q4":6.4,"2026-Q1":5.4,"2026-Q2":5.0,"2026-Q3":6.3},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), food & beverage serving services, current prices","quarterly_source":"Australian Bureau of Statistics, Quarterly Household Spending Indicator (HSI_Q): hotels, cafes and restaurants, current prices, seasonally adjusted, through-the-year % change","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Food & beverage serving services"},{"iso":"NZL","name":"New Zealand","region":"Asia-Pacific","annual":{"2021":11.6,"2022":14.4,"2023":2.1,"2024":-1.3},"quarterly":{"2025-Q3":5.9,"2025-Q4":4.1,"2026-Q1":6.5,"2026-Q2":2.9},"annual_source":"OECD, Annual household final consumption expenditure by purpose (COICOP), restaurants & hotels, current prices","quarterly_source":"Stats NZ, Retail Trade Survey June 2026 quarter, Table 1: actual sales values, food and beverage services (SFV1CA), % change from same quarter of previous year","annual_notes":{},"quarterly_kind":"spending","annual_measure":"Restaurants & hotels"}],"years":["2021","2022","2023","2024","2025"],"quarters":["2025-Q3","2025-Q4","2026-Q1","2026-Q2","2026-Q3"]};
+  window.GFI_SPEND = D;
   var KIND = { cpi: "restaurant prices", real: "inflation-adjusted", output: "industry output" };
   var QLABEL = function (q) { return "Q" + q.slice(-1) + " " + q.slice(0, 4); };
   var state = { mode: "annual", period: D.years[D.years.length - 1] };
@@ -217,6 +254,80 @@
     s += "<li><strong>" + c.name + ".</strong> " + (parts.length ? parts.join(" ") : "No comparable official series found.") + "</li>";
   });
   sl.innerHTML = s;
+})();
+</script>
+
+<script>
+(function () {
+  var D = window.GFI_SPEND; if (!D) return;
+  var COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"];
+  var MAX = 6, freq = "annual";
+  var picked = ["USA", "GBR", "DEU", "JPN"].filter(function (iso) { return D.countries.some(function (c) { return c.iso === iso; }); });
+  var colorOf = {};  // color follows the country, assigned in pick order and kept while it stays selected
+  function assign() { var used = {}; picked.forEach(function (iso) { if (colorOf[iso]) used[colorOf[iso]] = 1; }); picked.forEach(function (iso) { if (!colorOf[iso]) { colorOf[iso] = COLORS.filter(function (c) { return !used[c]; })[0]; used[colorOf[iso]] = 1; } }); Object.keys(colorOf).forEach(function (k) { if (picked.indexOf(k) < 0) delete colorOf[k]; }); }
+  var byIso = {}; D.countries.forEach(function (c) { byIso[c.iso] = c; });
+  var QL = function (q) { return "Q" + q.slice(-1) + " " + q.slice(0, 4); };
+  var fmt = function (v) { return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1) + "%"; };
+  var svg = document.getElementById("tr-svg"), tip = document.getElementById("tr-tip"), NS = "http://www.w3.org/2000/svg";
+  function el(n, a, p) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; }
+
+  function chips() {
+    var box = document.getElementById("tr-chips"); box.innerHTML = "";
+    D.countries.forEach(function (c) {
+      var on = picked.indexOf(c.iso) >= 0, b = document.createElement("button");
+      b.type = "button"; b.setAttribute("aria-pressed", String(on));
+      b.innerHTML = (on ? "<i style='background:" + colorOf[c.iso] + "'></i>" : "") + c.name;
+      b.disabled = !on && picked.length >= MAX;
+      b.onclick = function () { if (on) picked.splice(picked.indexOf(c.iso), 1); else picked.push(c.iso); assign(); draw(); };
+      box.appendChild(b);
+    });
+  }
+  function draw() {
+    assign(); chips();
+    document.querySelectorAll("#tr-freq button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.f === freq)); });
+    var periods = freq === "annual" ? D.years : D.quarters, lab = freq === "annual" ? function (p) { return p; } : QL;
+    document.getElementById("tr-title").textContent = (freq === "annual" ? "Annual % change, " : "Quarterly % change vs a year earlier, ") + lab(periods[0]) + "–" + lab(periods[periods.length - 1]);
+    var series = picked.map(function (iso) { var c = byIso[iso], src = freq === "annual" ? c.annual : c.quarterly; return { c: c, color: colorOf[iso], pts: periods.map(function (p, i) { return { i: i, p: p, v: src[p] }; }).filter(function (d) { return d.v !== undefined && d.v !== null; }), proxy: freq === "annual" ? (c.annual_real ? "inflation-adjusted" : null) : (c.quarterly_kind && c.quarterly_kind !== "spending" ? ({ cpi: "restaurant prices", real: "inflation-adjusted", output: "industry output" })[c.quarterly_kind] : null) }; });
+    var vals = []; series.forEach(function (s) { s.pts.forEach(function (d) { vals.push(d.v); }); });
+    var W = svg.clientWidth || 800, H = 380, m = { l: 44, r: 128, t: 12, b: 30 };
+    var lo = Math.min(0, Math.min.apply(null, vals.concat([0]))), hi = Math.max(0, Math.max.apply(null, vals.concat([1])));
+    var step = (hi - lo) > 30 ? 10 : (hi - lo) > 12 ? 5 : 2; lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    var x = function (i) { return m.l + (periods.length === 1 ? 0 : i / (periods.length - 1) * (W - m.l - m.r)); };
+    var y = function (v) { return m.t + (hi - v) / (hi - lo) * (H - m.t - m.b); };
+    svg.innerHTML = ""; svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    for (var v = lo; v <= hi + 1e-9; v += step) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), "class": v === 0 ? "zero" : "grid" }); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end" }).textContent = (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%"; }
+    periods.forEach(function (p, i) { el("text", { x: x(i), y: H - 8, "text-anchor": "middle" }).textContent = lab(p); });
+    var ends = [];
+    series.forEach(function (s) {
+      if (!s.pts.length) return;
+      var segs = [], cur = [];
+      s.pts.forEach(function (d, k) { if (k && d.i !== s.pts[k - 1].i + 1) { segs.push(cur); cur = []; } cur.push(d); }); segs.push(cur);
+      segs.forEach(function (sg) { el("path", { d: sg.map(function (d, k) { return (k ? "L" : "M") + x(d.i) + "," + y(d.v); }).join(""), fill: "none", stroke: s.color, "stroke-width": 2, "stroke-dasharray": s.proxy ? "5 4" : null, "stroke-linejoin": "round" }); });
+      s.pts.forEach(function (d) { el("circle", { cx: x(d.i), cy: y(d.v), r: 4, fill: s.color, stroke: "var(--card)", "stroke-width": 2 }); });
+      var last = s.pts[s.pts.length - 1]; ends.push({ s: s, x: x(last.i), y: y(last.v) });
+    });
+    ends.sort(function (a, b) { return a.y - b.y; }); for (var k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 15) ends[k].y = ends[k - 1].y + 15;
+    var over = ends.length ? ends[ends.length - 1].y - (H - m.b - 18) : 0; if (over > 0) ends.forEach(function (e) { e.y -= over; });
+    ends.forEach(function (e) { el("text", { x: e.x + 10, y: e.y + 4, "class": "lbl" }).textContent = e.s.c.name; });
+    var leg = document.getElementById("tr-legend"); leg.innerHTML = series.map(function (s) { return "<span><i style='background:" + s.color + "'></i>" + s.c.name + (s.proxy ? " (" + s.proxy + ")" : "") + "</span>"; }).join("");
+    var gaps = series.filter(function (s) { return s.pts.length < periods.length; }).map(function (s) { return s.c.name; });
+    var prox = series.filter(function (s) { return s.proxy; }).map(function (s) { return s.c.name + ": " + s.proxy; });
+    document.getElementById("tr-note").textContent = [gaps.length ? "Gaps where no figure is published: " + gaps.join(", ") + "." : "", prox.length ? "Dashed lines are proxies (" + prox.join("; ") + ")." : "", series.length ? "" : "Pick a country above."].filter(Boolean).join(" ");
+    // hover crosshair
+    var xh = el("line", { y1: m.t, y2: H - m.b, "class": "xhair", visibility: "hidden" });
+    var hit = el("rect", { x: m.l - 20, y: 0, width: W - m.l - m.r + 40, height: H, fill: "transparent" });
+    function at(i) {
+      xh.setAttribute("x1", x(i)); xh.setAttribute("x2", x(i)); xh.setAttribute("visibility", "visible");
+      var rows = series.map(function (s) { var d = s.pts.filter(function (q) { return q.i === i; })[0]; return d ? { s: s, v: d.v } : null; }).filter(Boolean).sort(function (a, b) { return b.v - a.v; });
+      tip.innerHTML = "<b>" + lab(periods[i]) + "</b><br>" + (rows.length ? rows.map(function (r) { return "<span style='color:" + r.s.color + "'>●</span> " + r.s.c.name + " " + fmt(r.v); }).join("<br>") : "No figures");
+      tip.hidden = false; var px = x(i) / W * svg.clientWidth; tip.style.left = Math.min(px + 12, svg.clientWidth - tip.offsetWidth - 4) + "px"; tip.style.top = "16px";
+    }
+    hit.addEventListener("mousemove", function (e) { var r = svg.getBoundingClientRect(), mx = (e.clientX - r.left) / r.width * W; var i = Math.round((mx - m.l) / ((W - m.l - m.r) / Math.max(1, periods.length - 1))); at(Math.max(0, Math.min(periods.length - 1, i))); });
+    hit.addEventListener("mouseleave", function () { tip.hidden = true; xh.setAttribute("visibility", "hidden"); });
+  }
+  document.querySelectorAll("#tr-freq button").forEach(function (b) { b.onclick = function () { freq = b.dataset.f; draw(); }; });
+  window.addEventListener("resize", draw);
+  draw();
 })();
 </script>
 
