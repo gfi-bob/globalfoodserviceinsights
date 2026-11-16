@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /2026-11-13-food-drink.html
+Disallow: /2026-11-13-chain-marketing.html
+
+Sitemap: https://globalfoodserviceinsights.com/sitemap.xml
